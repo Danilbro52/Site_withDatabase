@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administracja - Dodaj Produkt</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="home-button">Strona główna</a>
+            <h1>Administracja</h1>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <h2>Dodaj Produkt</h2>
+            <form id="add-product-form" action="add_product.php" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Nazwa:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Opis:</label>
+                    <textarea id="description" name="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="details">Szczegóły:</label>
+                    <textarea id="details" name="details" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="price">Cena:</label>
+                    <input type="text" id="price" name="price" pattern="^\d+(\.\d{1,2})?$" title="Wprowadź poprawną cenę w formacie 0.00" required>
+                </div>
+                <div class="form-group">
+                    <label for="stock_quantity">Ilość w magazynie:</label>
+                    <input type="number" id="stock_quantity" name="stock_quantity" required>
+                </div>
+                <div class="form-group">
+                    <label for="category_id">ID Kategorii:</label>
+                    <input type="number" id="category_id" name="category_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="image">Zdjęcie:</label>
+                    <input type="file" id="image" name="image" required>
+                </div>
+                <button type="submit">Dodaj Produkt</button>
+            </form>
+            <div id="message"></div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Naturanna - Skarbnica Ogrodnicza</p>
+    </footer>
+    <script>
+        document.getElementById('add-product-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            let formData = new FormData(this);
+
+            fetch('http://localhost/sklep-ogrodniczy/backend/add_product.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('message').innerText = data; // Display server response
+                this.reset(); // Reset the form
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
